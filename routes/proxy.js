@@ -1,6 +1,7 @@
 const express = require('express'); 
 const proxy = require('http-proxy-middleware');
 const axios = require('axios');
+const { sendTodiscord } = require('../logger/discordLogger');
 const router = express.Router();
 
 const servers = [
@@ -119,6 +120,7 @@ async function updateHealthyServers() {
       } catch (error) {
         console.log(error.message);
         console.log("unhealthy server id : ", server.id)
+        sendTodiscord(`----error--${error.message}----status---failed---serverId----${server.id}`)
       }
     }
 }
